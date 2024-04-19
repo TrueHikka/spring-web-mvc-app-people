@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new person</title>
+</head>
+<body>
+
+<form th:method="POST"
+      th:action="@{/people}"
+      th:object="${newPerson}"
+>
+    <label for="input-name">Enter the name of new person</label>
+    <input
+            id="input-name"
+            th:field="*{name}"
+            type="text"
+    />
+    <br/>
+    <input type="submit" value="Push the button to create new person" />
+</form>
+
+</body>
+</html>
