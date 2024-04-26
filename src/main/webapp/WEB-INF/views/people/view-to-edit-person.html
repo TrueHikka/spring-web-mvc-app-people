@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit person</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/style_edit.css}"/>
 </head>
 <body>
 
-<form th:method="POST"
-      th:action="@{/people/{id}(id=${editedPerson.getId()})}"
-      th:object="${editedPerson}"
->
-    <label for="input-name">Enter the name of edited person</label>
-    <input
-            id="input-name"
-            th:field="*{name}"
-            type="text"
-    />
-    <br/>
-    <input type="submit" value="Push the button to edit person" />
-</form>
+<div class="card">
+    <h5 class="card-title">Edit person</h5>
+    <form th:method="POST" th:action="@{/people/{id}(id=${editedPerson.getId()})}" th:object="${editedPerson}">
+        <div class="mb-3">
+            <label for="input-name" class="form-label">Enter the name of edited person</label>
+            <input id="input-name" th:field="*{name}" type="text" class="form-control"/>
+        </div>
 
+        <div class="mb-3">
+            <label for="input-age" class="form-label">Enter the age of edited person</label>
+            <input id="input-age" th:field="*{age}" type="text" class="form-control"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Push the button to edit person</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 </body>
 </html>

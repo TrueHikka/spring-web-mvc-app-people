@@ -1,0 +1,30 @@
+.person-badge {
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.list-compact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.container-custom {
+    width: 50%;
+    margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+

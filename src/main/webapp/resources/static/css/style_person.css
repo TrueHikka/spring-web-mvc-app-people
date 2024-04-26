@@ -1,0 +1,70 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    width: 300px;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    background-color: white;
+}
+
+.card h5 {
+    margin-top: 0;
+}
+
+.card p {
+    margin: 10px 0;
+}
+
+.card a {
+    display: block;
+    margin: 10px 0;
+    background-color: rgb(38 78 168);
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+}
+
+.card input[type="submit"] {
+    display: block;
+    margin: 10px 0;
+    background-color: rgb(245 35 0);
+    color: white;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+}
+
+.card a:hover {
+    background-color: rgb(0 0 72);
+}
+
+.card input[type="submit"]:hover {
+    background-color: rgb(108 0 36);
+}
+
+.card a {
+    margin-bottom: 5px;
+}
+
+
+
+
+
+
+
+
+
+
+
