@@ -26,6 +26,10 @@
                                 type="text"
                                 class="form-control"
                         />
+                        <span style="color: orangered"
+                              th:if="${#fields.hasErrors('name')}"
+                              th:errors="*{name}"
+                        />
                     </div>
 
                     <div class="mb-3">
@@ -35,6 +39,24 @@
                                 th:field="*{age}"
                                 type="text"
                                 class="form-control"
+                        />
+                        <span style="color: orangered"
+                              th:if="${#fields.hasErrors('age')}"
+                              th:errors="*{age}"
+                        />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="input-email" class="form-label">Enter the email of new person</label>
+                        <input
+                                id="input-email"
+                                th:field="*{email}"
+                                type="text"
+                                class="form-control"
+                        />
+                        <span style="color: orangered"
+                              th:if="${#fields.hasErrors('email')}"
+                              th:errors="*{email}"
                         />
                     </div>
                 </div>

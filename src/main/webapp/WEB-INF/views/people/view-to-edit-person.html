@@ -14,11 +14,28 @@
         <div class="mb-3">
             <label for="input-name" class="form-label">Enter the name of edited person</label>
             <input id="input-name" th:field="*{name}" type="text" class="form-control"/>
+            <span style="color: orangered"
+                  th:if="${#fields.hasErrors('name')}"
+                  th:errors="*{name}"
+            />
         </div>
 
         <div class="mb-3">
             <label for="input-age" class="form-label">Enter the age of edited person</label>
             <input id="input-age" th:field="*{age}" type="text" class="form-control"/>
+            <span style="color: orangered"
+                  th:if="${#fields.hasErrors('age')}"
+                  th:errors="*{age}"
+            />
+        </div>
+
+        <div class="mb-3">
+            <label for="input-email" class="form-label">Enter the email of edited person</label>
+            <input id="input-email" th:field="*{email}" type="text" class="form-control"/>
+            <span style="color: orangered"
+                  th:if="${#fields.hasErrors('email')}"
+                  th:errors="*{email}"
+            />
         </div>
 
         <button type="submit" class="btn btn-primary">Push the button to edit person</button>
