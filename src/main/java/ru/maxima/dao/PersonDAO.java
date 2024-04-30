@@ -53,23 +53,27 @@ public class PersonDAO {
 //    }
 
     public List<Person> getAllPeople() throws SQLException {
-        List<Person> people = new ArrayList<>();
-
-//        if (connection == null) {
+        //        if (connection == null) {
 //            System.out.println("Connection is null");
 //            throw new RuntimeException("Connection is not initialized");
 //        }
 
+        List<Person> people = new ArrayList<>();
+
         try {
             //Подготавливает запрос к БД, который хотим прокинуть
             //Промежуточный объект между соединением и самим заныриванием в БД
-            Statement statement = connection.createStatement();
-
-            String SQLQuery = "SELECT * FROM person";
+//            Statement statement = connection.createStatement();
+//
+//            String SQLQuery = "SELECT * FROM person";
 
             //Исполнение запроса - statement
             //resultSet - результат запроса - вернет строки из таблицы БД
-            ResultSet resultSet = statement.executeQuery(SQLQuery);
+//            ResultSet resultSet = statement.executeQuery(SQLQuery);
+
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from person");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 Person person = new Person();
@@ -99,7 +103,7 @@ public class PersonDAO {
 //
 //        ResultSet resultSet = statement.executeQuery(SQLQuery);
 
-        PreparedStatement preparedStatement = connection.prepareStatement("select * from person where id = ?");
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from person where id =?");
 
         preparedStatement.setLong(1, id);
 
@@ -118,6 +122,13 @@ public class PersonDAO {
     public void save(Person person) throws SQLException {
 //        person.setId(++PEOPLE_COUNT);
 //        people.add(person);
+        //        Statement statement = connection.createStatement();
+//
+//        String SQLQuery = "insert into person(id, name, email, age)" +
+//                "values ("+ id + ", '" + person.getName() + "', '" + person.getEmail() + "', " + person.getAge() + ")";
+//
+//        statement.executeUpdate(SQLQuery);
+
         Long id = person.getId();
 
         if (id == null || id == 0) {
@@ -127,12 +138,14 @@ public class PersonDAO {
                     .orElse(0L) + 1;
         }
 
-        Statement statement = connection.createStatement();
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into person(id, name, email, age)" + "values (?,?,?,?)");
 
-        String SQLQuery = "insert into person(id, name, email, age)" +
-                "values ("+ id + ", '" + person.getName() + "', '" + person.getEmail() + "', " + person.getAge() + ")";
+        preparedStatement.setLong(1, id);
+        preparedStatement.setString(2, person.getName());
+        preparedStatement.setString(3, person.getEmail());
+        preparedStatement.setInt(4, person.getAge());
 
-        statement.executeUpdate(SQLQuery);
+        preparedStatement.executeUpdate();
     }
 
     public void update(Person person, Long id) throws SQLException {
@@ -141,19 +154,32 @@ public class PersonDAO {
 //            personToUpdate.setName(person.getName());
 //            personToUpdate.setAge(person.getAge());
 //        }
-        Statement statement = connection.createStatement();
+//        Statement statement = connection.createStatement();
+//
+//        String SQLQuery = "update person set name = '" + person.getName() + "', age = " + person.getAge() + " where id = " + id;
+//
+//        statement.executeUpdate(SQLQuery);
 
-        String SQLQuery = "update person set name = '" + person.getName() + "', age = " + person.getAge() + " where id = " + id;
+        PreparedStatement preparedStatement = connection.prepareStatement("update person set name =?, age =? where id =?");
 
-        statement.executeUpdate(SQLQuery);
+        preparedStatement.setString(1, person.getName());
+        preparedStatement.setInt(2, person.getAge());
+        preparedStatement.setLong(3, id);
+
+        preparedStatement.executeUpdate();
 
     }
 
     public void delete(Long id) throws SQLException {
 //        people.removeIf(person -> person.getId().equals(id));
-        Statement statement = connection.createStatement();
-        String SQLQuery = "delete from person where id = " + id;
-        statement.executeUpdate(SQLQuery);
+//        Statement statement = connection.createStatement();
+//        String SQLQuery = "delete from person where id = " + id;
+//        statement.executeUpdate(SQLQuery);
 
+        PreparedStatement preparedStatement = connection.prepareStatement("delete from person where id =?");
+
+        preparedStatement.setLong(1, id);
+
+        preparedStatement.executeUpdate();
     }
 }
