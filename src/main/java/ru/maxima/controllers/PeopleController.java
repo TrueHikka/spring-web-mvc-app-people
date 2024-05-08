@@ -30,14 +30,14 @@ public class PeopleController {
     }
 
     @GetMapping()
-    public String showAllPeople(Model model) throws SQLException {
+    public String showAllPeople(Model model) {
         List<Person> allPeople = personDAO.getAllPeople();
         model.addAttribute("allPeople", allPeople);
         return "people/view-with-all-people";
     }
 
     @GetMapping("/{id}")
-    public String showPersonById(@PathVariable("id") Long id, Model model) throws SQLException {
+    public String showPersonById(@PathVariable("id") Long id, Model model) {
         Person person = personDAO.findById(id);
         model.addAttribute("personById", person);
         return "people/view-with-person-by-id";
@@ -50,7 +50,7 @@ public class PeopleController {
     }
 
     @PostMapping()
-    public String createNewPerson(@ModelAttribute("newPerson") @Valid Person person, BindingResult result) throws SQLException {
+    public String createNewPerson(@ModelAttribute("newPerson") @Valid Person person, BindingResult result) {
         if (result.hasErrors()){
             return "people/view-to-create-new-person";
         }
@@ -60,14 +60,14 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}/edit")
-    public String getPageToEditPerson(Model model, @PathVariable("id") Long id) throws SQLException {
+    public String getPageToEditPerson(Model model, @PathVariable("id") Long id) {
         Person person = personDAO.findById(id);
         model.addAttribute("editedPerson", person);
         return "people/view-to-edit-person";
     }
 
     @PostMapping("/{id}")
-    public String editPerson(@PathVariable("id") Long id, @ModelAttribute("editedPerson") @Valid Person person, BindingResult result) throws SQLException {
+    public String editPerson(@PathVariable("id") Long id, @ModelAttribute("editedPerson") @Valid Person person, BindingResult result) {
         if (result.hasErrors()){
             return "people/view-to-edit-person";
         }
@@ -77,7 +77,7 @@ public class PeopleController {
     }
 
     @PostMapping("/{id}/delete")
-    public String deletePerson(@PathVariable("id") Long id) throws SQLException {
+    public String deletePerson(@PathVariable("id") Long id) {
         personDAO.delete(id);
         return "redirect:/people";
     }

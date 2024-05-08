@@ -5,6 +5,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -15,17 +18,21 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 
 @Configuration
 @ComponentScan("ru.maxima")
+@PropertySource("classpath:database.properties")
 @EnableWebMvc
 public class SpringConfig implements WebMvcConfigurer {
 
     private final ApplicationContext context;
+    private final Environment env;
 
     @Autowired
-    public SpringConfig(ApplicationContext context) {
+    public SpringConfig(ApplicationContext context, Environment environment) {
         this.context = context;
+        this.env = environment;
     }
 
     @Bean
@@ -61,11 +68,30 @@ public class SpringConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
-//    @Bean
-//    public DataSource dataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        da
-//    }
+    @Bean
+    public DataSource dataSource() {
+//        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+//        driverManagerDataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("DRIVER")));
+//        driverManagerDataSource.setUrl(environment.getProperty("URL"));
+//        driverManagerDataSource.setUsername(environment.getProperty("USERNAME"));
+//        driverManagerDataSource.setPassword(environment.getProperty("PASSWORD"));
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        String driver = env.getProperty("DRIVER");
+        String url = env.getProperty("URL");
+        String username = env.getProperty("USERNAME");
+        String password = env.getProperty("PASSWORD");
+
+        dataSource.setDriverClassName(driver);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        return dataSource;
+    }
+
+    @Bean
+    public  JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
